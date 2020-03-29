@@ -507,7 +507,9 @@ extension SwiftLinkPreview {
                             let value = value.decoded.extendedTrim
                             if tag == "image" {
                                 let value = addImagePrefixIfNeeded(value, result: result)
-                                if value.isImage() { result.set(value, for: key) }
+                               if result.image == nil {
+                                    result.set(value, for: key)
+                                }
                             } else if tag == "video" {
                                 let value = addImagePrefixIfNeeded(value, result: result)
                                 if value.isVideo() { result.set(value, for: key) }
@@ -577,7 +579,6 @@ extension SwiftLinkPreview {
                     let imgs = values.map { self.addImagePrefixIfNeeded($0, result: result) }
 
                     result.images = imgs
-                    result.image = imgs.first
                 }
             }
         } else {
@@ -621,7 +622,7 @@ extension SwiftLinkPreview {
             }
         }
 
-        return removeSuffixIfNeeded(image)
+        return image
 
     }
 
